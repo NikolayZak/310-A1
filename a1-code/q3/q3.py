@@ -254,11 +254,12 @@ def sgd(X, y, J, dJ, w0, step_size_fn, max_iter):
     for i in range(max_iter):
         random_index = np.random.randint(0, X.shape[1]) # pick a random index
 
-        x_col = X[:, random_index:random_index+1]       # get the column vector
-        y_col = y[:, random_index:random_index+1]       # get the column vector
+        x_col = X[:, random_index:random_index+1]       # get the x vector
+        y_col = y[:, random_index:random_index+1]       # get the y vector
 
-        gradient = dJ(x_col, y_col, w)
-        w -= step_size_fn(i) * gradient
+        gradient = dJ(x_col, y_col, w)                  # compute the gradient
+        w -= step_size_fn(i) * gradient                 # update w
+
         fs.append(J(x_col, y_col, w))
         ws.append(w.copy())
 
