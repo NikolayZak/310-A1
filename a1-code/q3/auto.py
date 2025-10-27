@@ -6,7 +6,7 @@ import q3 as q3
 #-------------------------------------------------------------------------------
 
 # load auto-mpg-regression.tsv, including  Keys are the column names, including mpg.
-auto_data_all = []
+auto_data_all = q3.load_auto_data('auto-mpg-regression.tsv')
 
 # The choice of feature processing for each feature, mpg is always raw and
 # does not need to be specified.  Other choices are q3.standard and q3.one_hot.
@@ -15,8 +15,7 @@ features1 = [('cylinders', q3.standard),
             ('displacement', q3.standard),
             ('horsepower', q3.standard),
             ('weight', q3.standard),
-            ('acceleration', q3.standard),
-            ('origin', q3.one_hot)]
+            ('acceleration', q3.standard)]
 
 features2 = [('cylinders', q3.one_hot),
             ('displacement', q3.standard),

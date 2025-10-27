@@ -30,6 +30,8 @@ def rv(value_list):
 # y is 1 by n : output regression values
 # th is d by 1 : weights
 # th0 is 1 by 1 or scalar
+# d is the number of features
+# n is the number of examples
 def lin_reg(x, th, th0):
     """ Returns the predicted y
 
@@ -94,7 +96,7 @@ def d_lin_reg_th(x, th, th0):
     [[1.0], [1.0]]
     """
     #Your code here [1]
-    pass
+    return x
 
 def d_square_loss_th(x, y, th, th0):
     """Returns the gradient of square_loss(x, y, th, th0) with respect to
@@ -115,7 +117,7 @@ def d_square_loss_th(x, y, th, th0):
     [[4.1], [4.1]]
     """
     #Your code here [2]
-    pass
+    return 2 * (lin_reg(x, th, th0) - y) * d_lin_reg_th(x, th, th0)
 
 def d_mean_square_loss_th(x, y, th, th0):
     """ Returns the gradient of mean_square_loss(x, y, th, th0) with
@@ -130,7 +132,7 @@ def d_mean_square_loss_th(x, y, th, th0):
     [[4.1], [4.1]]
     """
     #Your code here [3]
-    pass
+    return np.mean(d_square_loss_th(x, y, th, th0), axis=1, keepdims=True)
 
 def d_lin_reg_th0(x, th, th0):
     """ Returns the gradient of lin_reg(x, th, th0) with respect to th0.
@@ -141,7 +143,7 @@ def d_lin_reg_th0(x, th, th0):
     [[1.0, 1.0, 1.0, 1.0]]
     """
     #Your code here [4]
-    pass
+    return np.ones((1, x.shape[1]))
 
 def d_square_loss_th0(x, y, th, th0):
     """ Returns the gradient of square_loss(x, y, th, th0) with
@@ -153,8 +155,8 @@ def d_square_loss_th0(x, y, th, th0):
     >>> d_square_loss_th0(X, Y, th, th0).tolist()
     [[4.1, 3.6999999999999993, 4.5, 3.9000000000000004]]
     """
-    #Your code here [5] 
-    pass
+    #Your code here [5]
+    return 2 * (lin_reg(x, th, th0) - y) * d_lin_reg_th0(x, th, th0)
 
 def d_mean_square_loss_th0(x, y, th, th0):
     """ Returns the gradient of mean_square_loss(x, y, th, th0) with
@@ -167,10 +169,10 @@ def d_mean_square_loss_th0(x, y, th, th0):
     [[4.05]]
     """
     #Your code here [6]
-    pass
+    return np.mean(d_square_loss_th0(x, y, th, th0), axis=1, keepdims=True)
 
 def d_ridge_obj_th(x, y, th, th0, lam):
-    """Return the derivative of tghe ridge objective value with respect
+    """Return the derivative of the ridge objective value with respect
     to theta.
 
     Note: uses broadcasting to add d x n to d x 1 array below
@@ -186,7 +188,7 @@ def d_ridge_obj_th(x, y, th, th0, lam):
     [[210.15], [14.05]]
     """
     #Your code here [7]
-    pass
+    
 
 def d_ridge_obj_th0(x, y, th, th0, lam):
     """Return the derivative of tghe ridge objective value with respect
