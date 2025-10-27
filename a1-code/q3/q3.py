@@ -188,6 +188,7 @@ def d_ridge_obj_th(x, y, th, th0, lam):
     [[210.15], [14.05]]
     """
     #Your code here [7]
+    return d_mean_square_loss_th(x, y, th, th0) + 2 * lam * th
     
 
 def d_ridge_obj_th0(x, y, th, th0, lam):
@@ -207,7 +208,7 @@ def d_ridge_obj_th0(x, y, th, th0, lam):
     [[4.05]]
     """
     #Your code here [8]
-    pass
+    return d_mean_square_loss_th0(x, y, th, th0)
 
 #Concatenates the gradients with respect to theta and theta_0
 def ridge_obj_grad(x, y, th, th0, lam):
