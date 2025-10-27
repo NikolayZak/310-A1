@@ -1,4 +1,3 @@
-
 import numpy as np
 import csv
 import itertools, functools, operator
@@ -300,7 +299,16 @@ def sgdTest():
         return num_grad(f)(w)
 
     #Your code here [10]
-    pass
+    def step_size_fn(i):
+        return 0.05
+    
+    np.random.seed(0) # same random numbers each time
+    d, n = X.shape
+    X_extend = np.vstack([X, np.ones((1, n))])
+    w_init = np.zeros((d + 1, 1))
+    w, fs, ws = sgd(X_extend, y, J, dJ, w_init, step_size_fn, 1000)
+    print("Initial loss: ", fs[0])
+    print("Final loss: ", fs[-1])
 
 ############################################################
 
