@@ -5,7 +5,7 @@ FEATURE_Y_INDEX = 3    # Index of the feature for the y-axis (0 to 3 for Iris).
 
 NUM_CLUSTERS = 3       # Number of clusters for K-Means (Experiment with 2, 3, 4)
 MAX_ITER = 10          # Maximum number of iterations for the algorithm (Experiment with 5, 10, 20)
-learning_rate = 0.1    # lr: 0.1, 0.01
+learning_rate = 0.01    # lr: 0.1, 0.01
 num_epochs = 10        # epoch: 5, 10, 50
 hidden_layers = [128]  # layer: [128], [256, 256]
 
