@@ -1,12 +1,13 @@
 
 # 0. Adjust parameters
-NUM_CLUSTERS = 2       # Number of clusters for K-Means (Experiment with 2, 3, 4)
-MAX_ITER = 5           # Maximum number of iterations for the algorithm (Experiment with 5, 10, 20)
 FEATURE_X_INDEX = 2    # Index of the feature for the x-axis (0 to 3 for Iris)
 FEATURE_Y_INDEX = 3    # Index of the feature for the y-axis (0 to 3 for Iris).
-learning_rate = 0.01   # lr: 0.1, 0.01, ..
-num_epochs = 50        # epoch: 5, 10, 50, ...
-hidden_layers = [128]  # layer: [128], [256, 256], ... .
+
+NUM_CLUSTERS = 3       # Number of clusters for K-Means (Experiment with 2, 3, 4)
+MAX_ITER = 10          # Maximum number of iterations for the algorithm (Experiment with 5, 10, 20)
+learning_rate = 0.1    # lr: 0.1, 0.01
+num_epochs = 10        # epoch: 5, 10, 50
+hidden_layers = [128]  # layer: [128], [256, 256]
 
 # 1. Import any other required libraries (e.g., numpy, scikit-learn)
 import numpy as np
@@ -114,14 +115,24 @@ plt.show()
     # 4.1. Extract the features for visualization
 x_feature = X[:, FEATURE_X_INDEX]
 y_feature = X[:, FEATURE_Y_INDEX]
+
     # 4.2. Create a scatter plot of x_feature vs y_feature, colored by the cluster labels
-    # 4.3. Use different colors to represent different clusters
 plt.figure(figsize=(7, 7))
 plt.scatter(
     x = x_feature,
     y = y_feature,
     c = cluster_labels
 )
+    # 4.3. Use different colors to represent different clusters
+plt.scatter(
+    kmeans.cluster_centers_[:, FEATURE_X_INDEX],
+    kmeans.cluster_centers_[:, FEATURE_Y_INDEX],
+    color='black',
+    marker='X',
+    s=200,
+    label='Centroids'
+)
+
 plt.xlabel(iris.feature_names[FEATURE_X_INDEX])
 plt.ylabel(iris.feature_names[FEATURE_Y_INDEX])
 plt.title(f'K-Means Clustering')
