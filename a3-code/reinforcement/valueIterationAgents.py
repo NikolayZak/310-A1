@@ -65,8 +65,36 @@ class ValueIterationAgent(ValueEstimationAgent):
           value iteration, V_k+1(...) depends on V_k(...)'s.
         """
         "*** YOUR CODE HERE ***"
+        
+        states = self.mdp.getStates()
 
+        for i in range(self.iterations):
+            new_values = util.Counter()
+            for s in states:
+                # check for a terminal state
+                if self.mdp.isTerminal(s):
+                    new_values[s] = 0
+                    continue
 
+                actions = self.mdp.getPossibleActions(s)
+                best_reward = None
+                for a in actions:
+                    transitions = self.mdp.getTransitionStatesAndProbs(s, a) # returns [(next_state, probabilty)]
+                    # compute action reward
+                    action_reward = 0
+                    for t in transitions:
+                        Ri = self.mdp.getReward(s,a,t[0])
+                        Vi = self.getValue(t[0])
+                        action_reward += t[1] * (Ri + Vi * self.discount)
+                    
+                    # take the best reward
+                    if best_reward == None or action_reward > best_reward:
+                        best_reward = action_reward
+
+                new_values[s] = best_reward
+            self.values = new_values
+
+                        
     def getValue(self, state):
         """
           Return the value of the state (computed in __init__).
@@ -79,6 +107,18 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
+        # check for terminal state
+        if self.mdp.isTerminal(state):
+            return 0
+        transitions = self.mdp.getTransitionStatesAndProbs(state, action)
+        # compute action reward
+        action_reward = 0
+        for t in transitions:
+            Ri = self.mdp.getReward(state,action,t[0])
+            Vi = self.getValue(t[0])
+            action_reward += t[1] * (Ri + Vi * self.discount)
+        
+        return action_reward
  
 
     def computeActionFromValues(self, state):
@@ -91,7 +131,20 @@ class ValueIterationAgent(ValueEstimationAgent):
           terminal state, you should return None.
         """
         "*** YOUR CODE HERE ***"
+        if self.mdp.isTerminal(state):
+            return None
+        
+        actions = self.mdp.getPossibleActions(state)
+        best_action = None
+        best_value = None
 
+        for a in actions:
+            q = self.computeQValueFromValues(state, a)
+            if best_value == None or q > best_value:
+                best_value = q
+                best_action = a
+
+        return best_action
 
     def getPolicy(self, state):
         return self.computeActionFromValues(state)
